@@ -46,7 +46,7 @@ class sum_data(data.Dataset):
 dataset=sum_data(1000)
 dataloader=data.DataLoader(dataset, batch_size=10,shuffle=True)
 
-#loss_function=nn.MSELoss()
+# loss_function=nn.MSELoss()
 # optimizer=torch.optim.SGD(model.parameters(), lr=0.1) 
 
 class MSELoss(nn.Module): # custom loss function
