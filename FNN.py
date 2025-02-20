@@ -46,8 +46,18 @@ class sum_data(data.Dataset):
 dataset=sum_data(1000)
 dataloader=data.DataLoader(dataset, batch_size=10,shuffle=True)
 
-loss_function=nn.MSELoss()
+#loss_function=nn.MSELoss()
 # optimizer=torch.optim.SGD(model.parameters(), lr=0.1) 
+
+class MSELoss(nn.Module): # custom loss function
+    def __init__(self):
+        super().__init__()
+    
+    def forward(self,pred, target):
+        loss = (pred - target) ** 2
+        return torch.mean(loss)
+        
+loss_function = MSELoss()
 
 class optimizer_SGD: # custom optimizer
     def __init__(self,pram, lr):
@@ -158,3 +168,12 @@ def val_loss(model, test_dataloader,loss_function):
     return loss_val
 
 print("val_loss: ",val_loss(model, test_dataloader, loss_function))
+
+# saving the model
+state_dict = model.state_dict()
+torch.save(state_dict, "our_model.tar")
+print("model saved")
+# loading the model
+model=simple_NN(2,1,6,2)   
+model.load_state_dict(torch.load("our_model.tar"))
+print("model loaded")
